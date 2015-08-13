@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Installs GlusterFS (configures and creates cluster)
+Installs GlusterFS http://www.gluster.org/ (configures and creates cluster)
 
 Requirements
 ------------
@@ -41,9 +41,9 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: glusterfs-nodes
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: mrlesmithjr.glusterfs }
 
 License
 -------
@@ -53,4 +53,7 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Larry Smith Jr.
+- @mrlesmithjr
+- http://everythingshouldbevirtual.com
+- mrlesmithjr [at] gmail.com
