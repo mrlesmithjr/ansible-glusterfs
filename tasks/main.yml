@@ -3,7 +3,7 @@
 - include: config_lvm.yml
   when: glusterfs_config_lvm is defined and glusterfs_config_lvm
 
-- include: config_etc_hosts.yml
+- include: update_etc_hosts.yml
   when: config_hosts is defined and config_hosts
 
 - include: debian.yml
