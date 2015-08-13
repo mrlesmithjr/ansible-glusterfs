@@ -1,7 +1,10 @@
 ---
 # tasks file for ansible-glusterfs
 - include: config_lvm.yml
-  when: config_lvm is defined and config_lvm
+  when: glusterfs_config_lvm is defined and glusterfs_config_lvm
+
+- include: config_etc_hosts.yml
+  when: config_hosts is defined and config_hosts
 
 - include: debian.yml
   when: ansible_os_family == "Debian"

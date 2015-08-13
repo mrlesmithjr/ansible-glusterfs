@@ -12,20 +12,21 @@ Role Variables
 --------------
 
 ````
-cluster_hosts: 'gluster-n1,gluster-n2,gluster-n3'  #defines the hosts to join cluster...define here or in group_vars/group
+cluster_hosts: 'gluster-n1,gluster-n2'  #defines the hosts to join cluster...define here or in group_vars/group
 config_glusterfs: false  #defines if glusterfs should be configured
-config_lvm: false  #defines if lvm should be configured
+config_hosts: false  #defines if /etc/hosts should be updated with nodes
 create_gluster_bricks:
   - name: scripts
     owner: root
     group: root
-    replicas: 2
+    replicas: 2  #should be set to the number of nodes in cluster
   - name: webs
     owner: root
     group: root
-    replicas: 2
+    replicas: 2  #should be set to the number of nodes in cluster
 glusterfs_brick_dir: /mnt/gluster  #defines the mountpoint for gluster bricks and volumes to be created
 glusterfs_client: false  #defines if host is a glusterfs client
+glusterfs_config_lvm: false  #defines if lvm should be configured
 glusterfs_disks:
   - name: /dev/sdb
     mountpoint: '{{ glusterfs_brick_dir }}'
