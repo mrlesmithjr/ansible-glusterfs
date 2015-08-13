@@ -1,0 +1,42 @@
+---
+- name: config_glusterfs | reconfiguring /etc/init/mounting-glusterfs.conf to start earlier on boot
+  template: src=mounting-glusterfs.conf.j2 dest=/etc/init/mounting-glusterfs.conf owner=root group=root mode=0644
+  when: config_glusterfs
+
+- name: config_glusterfs | updating /etc/hosts in case of dns lookup issues
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ansible_eth0.ipv4.address }} {{ item }}" state=present
+  with_items: groups['{{ server_group }}']
+  when: config_hosts and glusterfs_repl_int == "eth0"
+
+- name: config_glusterfs | updating /etc/hosts in case of dns lookup issues
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ansible_eth1.ipv4.address }} {{ item }}" state=present
+  with_items: groups['{{ server_group }}']
+  when: config_hosts and glusterfs_repl_int == "eth1"
+
+- name: config_glusterfs | updating /etc/hosts in case of dns lookup issues
+  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ansible_eth2.ipv4.address }} {{ item }}" state=present
+  with_items: groups['{{ server_group }}']
+  when: config_hosts and glusterfs_repl_int == "eth2"
+
+- name: config_glusterfs | starting GlusterFS
+  service: name=glusterfs-server state=started enabled=true
+  when: glusterfs_server
+
+- name: config_glusterfs | connecting gluster peers
+  shell: gluster peer probe {{ item }}
+  register: gluster_peer_probe
+  changed_when: "'already in peer list' not in gluster_peer_probe.stdout"
+  with_items: groups['{{ server_group }}']
+  when: glusterfs_server and '{{ item }} != {{ inventory_hostname }}'
+
+- name: config_glusterfs | creating brick folders
+  file: path={{ glusterfs_brick_dir }}/{{ item.name }}/ owner={{ item.owner }} group={{ item.group }} state=directory
+  with_items: create_gluster_bricks
+  when: glusterfs_server
+
+- name: create gluster volume
+  gluster_volume: state=present name={{ item.name }} brick={{ glusterfs_brick_dir }}/{{ item.name }} replicas={{ item.replicas }} cluster={{ cluster_hosts }}
+  with_items: create_gluster_bricks
+#  ignore_errors: yes
+  run_once: true
+  when: glusterfs_server
