@@ -1,0 +1,40 @@
+---
+- name: config_lvm | installing packages
+  apt: name={{ item }} state=present
+  with_items:
+     - lvm2
+     - scsitools
+     - xfsprogs
+  when: ansible_os_family == "Debian"
+
+- name: config_lvm | installing lvm2
+  yum: name=system-storage-manager state=present
+  when: ansible_os_family == "RedHat"
+
+- name: config_lvm | installing sg3_utils
+  yum: name=sg3_utils state=present
+  when: ansible_os_family == "RedHat"
+
+- name: config_lvm | rescanning for new disks
+  command: /sbin/rescan-scsi-bus
+  when: ansible_os_family == "Debian"
+
+- name: config_lvm | rescanning for new disks
+  command: /usr/bin/rescan-scsi-bus.sh
+  when: ansible_os_family == "RedHat"
+
+- name: config_lvm | creating new LVM volume group
+  lvg: vg={{ item.vgname }} pvs={{ item.name }} state=present
+  with_items: glusterfs_disks
+
+- name: config_lvm | creating new LVM logical volume
+  lvol: vg={{ item.vgname }} lv={{ item.lvname }} size={{ item.lvsize }}
+  with_items: glusterfs_disks
+
+- name: config_lvm | creating new filesystem on new LVM logical volume
+  filesystem: fstype={{ item.filesystem }} dev=/dev/{{ item.vgname }}/{{ item.lvname }}
+  with_items: glusterfs_disks
+
+- name: config_lvm | mounting new filesystem
+  mount: name={{ item.mountpoint }} src=/dev/{{ item.vgname }}/{{ item.lvname }} fstype={{ item.filesystem }} state=mounted
+  with_items: glusterfs_disks

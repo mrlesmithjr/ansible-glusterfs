@@ -14,6 +14,7 @@ Role Variables
 ````
 cluster_hosts: 'gluster-n1,gluster-n2,gluster-n3'  #defines the hosts to join cluster...define here or in group_vars/group
 config_glusterfs: false  #defines if glusterfs should be configured
+config_lvm: false  #defines if lvm should be configured
 create_gluster_bricks:
   - name: scripts
     owner: root
@@ -25,6 +26,13 @@ create_gluster_bricks:
     replicas: 2
 glusterfs_brick_dir: /mnt/gluster  #defines the mountpoint for gluster bricks and volumes to be created
 glusterfs_client: false  #defines if host is a glusterfs client
+glusterfs_disks:
+  - name: /dev/sdb
+    mountpoint: '{{ glusterfs_brick_dir }}'
+    vgname: glusterfs-vg
+    lvname: glusterfs-lv
+    lvsize: 100%FREE
+    filesystem: xfs
 glusterfs_repl_int: eth0  #defines interface to configure for glusterfs replication...define here or in group_vars/group
 glusterfs_server: false  #defines if host is a glusterfs server
 glusterfs_version: 3.5
