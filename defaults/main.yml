@@ -2,24 +2,33 @@
 # defaults file for ansible-glusterfs
 config_glusterfs: false  #defines if glusterfs should be configured
 config_hosts: false  #defines if /etc/hosts should be updated with nodes
-create_gluster_bricks:
+glusterfs_brick_dir: /mnt/gluster  #defines the mountpoint for gluster bricks and volumes to be created
+glusterfs_client_group: glusterfs-client-nodes  #defines the Ansible inventory group for clients
+glusterfs_config_lvm: false  #defines if lvm should be configured
+glusterfs_create_bricks:  #defines glusterfs bricks to create
   - name: scripts
     owner: root
     group: root
   - name: webs
     owner: root
     group: root
-glusterfs_brick_dir: /mnt/gluster  #defines the mountpoint for gluster bricks and volumes to be created
-glusterfs_client: false  #defines if host is a glusterfs client
-glusterfs_config_lvm: false  #defines if lvm should be configured
-glusterfs_disks:
-  - name: /dev/sdb
+glusterfs_debian_repo_info:  #defines Debian repo for GlusterFS
+  keyserver: 'keyserver.ubuntu.com'
+  id: 'F7C73FCC930AC9F83B387A5613E01B7B3FE869A9'
+  repo: 'deb http://ppa.launchpad.net/gluster/glusterfs-{{ glusterfs_version }}/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main'
+glusterfs_nodes_group: glusterfs-nodes  #defines the Ansible inventory group name for all nodes part of GlusterFS
+glusterfs_repl_int_address: ansible_eth1.ipv4.address  #defines interface to configure for glusterfs replication...define here or in group_vars/group
+glusterfs_server: false  #defines if host is a glusterfs server
+glusterfs_server_group: glusterfs-server-nodes  #defines the hosts inventory group to configure...define here or in group_vars/group
+glusterfs_server_master: node0  #defines the node to be considered as GlusterFS master
+glusterfs_version: 3.6
+glusterfs_vols:  #defines GlusterFS volumes to create
+  - name: glusterfs-vol-1
+    disks:
+      - /dev/sdb
+      - /dev/sdc
     mountpoint: '{{ glusterfs_brick_dir }}'
     vgname: glusterfs-vg
     lvname: glusterfs-lv
     lvsize: 100%FREE
     filesystem: xfs
-glusterfs_repl_int: eth0  #defines interface to configure for glusterfs replication...define here or in group_vars/group
-glusterfs_server: false  #defines if host is a glusterfs server
-glusterfs_version: 3.5
-server_group: glusterfs-nodes  #defines the hosts inventory group to configure...define here or in group_vars/group

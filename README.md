@@ -14,7 +14,7 @@ Role Variables
 ````
 config_glusterfs: false  #defines if glusterfs should be configured
 config_hosts: false  #defines if /etc/hosts should be updated with nodes
-create_gluster_bricks:
+glusterfs_create_bricks:
   - name: scripts
     owner: root
     group: root
@@ -24,17 +24,17 @@ create_gluster_bricks:
 glusterfs_brick_dir: /mnt/gluster  #defines the mountpoint for gluster bricks and volumes to be created
 glusterfs_client: false  #defines if host is a glusterfs client
 glusterfs_config_lvm: false  #defines if lvm should be configured
-glusterfs_disks:
+glusterfs_vols:
   - name: /dev/sdb
     mountpoint: '{{ glusterfs_brick_dir }}'
     vgname: glusterfs-vg
     lvname: glusterfs-lv
     lvsize: 100%FREE
     filesystem: xfs
-glusterfs_repl_int: eth0  #defines interface to configure for glusterfs replication...define here or in group_vars/group
+glusterfs_repl_int_address: eth0  #defines interface to configure for glusterfs replication...define here or in group_vars/group
 glusterfs_server: false  #defines if host is a glusterfs server
 glusterfs_version: 3.5
-server_group: glusterfs-nodes  #defines the hosts inventory group to configure...define here or in group_vars/group
+glusterfs_server_group: glusterfs-nodes  #defines the hosts inventory group to configure...define here or in group_vars/group
 ````
 
 Dependencies

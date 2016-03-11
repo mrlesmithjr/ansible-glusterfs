@@ -1,27 +1,46 @@
 ---
 - name: config_glusterfs | reconfiguring /etc/init/mounting-glusterfs.conf to start earlier on boot
-  template: src=mounting-glusterfs.conf.j2 dest=/etc/init/mounting-glusterfs.conf owner=root group=root mode=0644
+  template:
+    src: "mounting-glusterfs.conf.j2"
+    dest: "/etc/init/mounting-glusterfs.conf"
+    owner: root
+    group: root
+    mode: 0644
   when: config_glusterfs
 
 - name: config_glusterfs | starting GlusterFS
-  service: name=glusterfs-server state=started enabled=true
-  when: glusterfs_server
+  service:
+    name: "glusterfs-server"
+    state: started
+    enabled: true
+  when: inventory_hostname in groups[glusterfs_server_group]
 
 - name: config_glusterfs | connecting gluster peers
   shell: gluster peer probe {{ item }}
   register: gluster_peer_probe
   changed_when: "'already in peer list' not in gluster_peer_probe.stdout"
-  with_items: groups['{{ server_group }}']
-  when: glusterfs_server and '{{ item }} != {{ inventory_hostname }}'
+  with_items: groups[glusterfs_server_group]
+  when: >
+        inventory_hostname in groups[glusterfs_server_group] and
+        item != inventory_hostname
 
 - name: config_glusterfs | creating brick folders
-  file: path={{ glusterfs_brick_dir }}/{{ item.name }}/ owner={{ item.owner }} group={{ item.group }} state=directory
-  with_items: create_gluster_bricks
-  when: glusterfs_server
+  file:
+    path: "{{ glusterfs_brick_dir }}/{{ item.name }}/"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    state: directory
+  with_items: glusterfs_create_bricks
+  when: inventory_hostname in groups[glusterfs_server_group]
 
 - name: config_glusterfs | create gluster volume
-  gluster_volume: state=present name={{ item.name }} brick={{ glusterfs_brick_dir }}/{{ item.name }} replicas="{{ groups[server_group]|length }}" cluster="{% for host in groups[server_group] %}{{ hostvars[host]['ansible_hostname'] }}{% if not loop.last %},{% endif %}{% endfor %}"
-  with_items: create_gluster_bricks
-#  ignore_errors: yes
-  run_once: true
-  when: glusterfs_server
+  gluster_volume:
+    state: present
+    name: "{{ item.name }}"
+    brick: "{{ glusterfs_brick_dir }}/{{ item.name }}"
+    replicas: "{{ groups[glusterfs_server_group]|length }}"
+    cluster: "{% for host in groups[glusterfs_server_group] %}{{ host }}{% if not loop.last %},{% endif %}{% endfor %}"
+  with_items: glusterfs_create_bricks
+  when: >
+        inventory_hostname in groups[glusterfs_server_group] and
+        inventory_hostname == glusterfs_server_master
