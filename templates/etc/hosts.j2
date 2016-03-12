@@ -7,7 +7,7 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 {% for item in groups[glusterfs_nodes_group] %}
 {%   if item != inventory_hostname %}
-{{ ansible_ssh_host }} {{ item }} {% if pri_domain_name is defined %}{{ item }}.{{ pri_domain_name }}{% endif %}
+{{ hostvars[item].ansible_ssh_host }} {{ item }} {% if pri_domain_name is defined %}{{ item }}.{{ pri_domain_name }}{% endif %}
 
 {%   endif %}
 {% endfor %}

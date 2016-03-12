@@ -38,9 +38,8 @@ glusterfs_create_bricks:  #defines glusterfs bricks to create
     owner: root
     group: root
 glusterfs_debian_repo_info:  #defines Debian repo for GlusterFS
-  keyserver: 'keyserver.ubuntu.com'
-  id: 'F7C73FCC930AC9F83B387A5613E01B7B3FE869A9'
-  repo: 'deb http://ppa.launchpad.net/gluster/glusterfs-{{ glusterfs_version }}/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main'
+  key_url: 'http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.8/pub.key'
+  repo: 'deb http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.8/Debian/{{ ansible_distribution_release|lower }}/apt {{ ansible_distribution_release|lower }} main'
 glusterfs_lvm_vols:  #defines GlusterFS LVM volumes to create (Used for GlusterFS Bricks)
   - lvname: glusterfs-lv
     disks:
@@ -57,6 +56,10 @@ glusterfs_repl_int_address: ansible_eth1.ipv4.address  #defines interface to con
 glusterfs_server: false  #defines if host is a glusterfs server
 glusterfs_server_group: glusterfs-server-nodes  #defines the hosts inventory group to configure...define here or in group_vars/group
 glusterfs_server_master: node0  #defines the node to be considered as GlusterFS master
+glusterfs_ubuntu_repo_info:  #defines Ubuntu repo for GlusterFS
+  keyserver: 'keyserver.ubuntu.com'
+  id: 'F7C73FCC930AC9F83B387A5613E01B7B3FE869A9'
+  repo: 'deb http://ppa.launchpad.net/gluster/glusterfs-{{ glusterfs_version }}/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main'
 glusterfs_version: 3.6
 ````
 

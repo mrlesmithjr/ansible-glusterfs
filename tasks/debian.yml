@@ -8,11 +8,25 @@
 
 - name: debian | adding glusterfs apt repo key
   apt_key:
-    keyserver: "{{ glusterfs_debian_repo_info.keyserver }}"
-    id: "{{ glusterfs_debian_repo_info.id }}"
+    keyserver: "{{ glusterfs_ubuntu_repo_info.keyserver }}"
+    id: "{{ glusterfs_ubuntu_repo_info.id }}"
     state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: debian | adding glusterfs apt repo key
+  apt_key:
+    url: "{{ glusterfs_debian_repo_info.key_url }}"
+    state: present
+  when: ansible_distribution == "Debian"
+
+- name: debian | adding glusterfs apt repo
+  apt_repository:
+    repo: '{{ glusterfs_ubuntu_repo_info.repo }}'
+    state: present
+  when: ansible_distribution == "Ubuntu"
 
 - name: debian | adding glusterfs apt repo
   apt_repository:
     repo: '{{ glusterfs_debian_repo_info.repo }}'
     state: present
+  when: ansible_distribution == "Debian"
