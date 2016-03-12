@@ -1,39 +1,39 @@
 ---
-- name: config_glusterfs | reconfiguring /etc/init/mounting-glusterfs.conf to start earlier on boot
+- name: debian | installing glusterfs server
+  apt:
+    name: "glusterfs-server"
+    state: present
+
+- name: config_glusterfs_server | reconfiguring /etc/init/mounting-glusterfs.conf to start earlier on boot
   template:
-    src: "mounting-glusterfs.conf.j2"
+    src: "etc/init/mounting-glusterfs.conf.j2"
     dest: "/etc/init/mounting-glusterfs.conf"
     owner: root
     group: root
     mode: 0644
-  when: config_glusterfs
 
-- name: config_glusterfs | starting GlusterFS
+- name: config_glusterfs_server | starting GlusterFS
   service:
     name: "glusterfs-server"
     state: started
     enabled: true
-  when: inventory_hostname in groups[glusterfs_server_group]
 
-- name: config_glusterfs | connecting gluster peers
+- name: config_glusterfs_server | connecting gluster peers
   shell: gluster peer probe {{ item }}
   register: gluster_peer_probe
   changed_when: "'already in peer list' not in gluster_peer_probe.stdout"
   with_items: groups[glusterfs_server_group]
-  when: >
-        inventory_hostname in groups[glusterfs_server_group] and
-        item != inventory_hostname
+  when: item != inventory_hostname
 
-- name: config_glusterfs | creating brick folders
+- name: config_glusterfs_server | creating brick folders
   file:
     path: "{{ glusterfs_brick_dir }}/{{ item.name }}/"
     owner: "{{ item.owner }}"
     group: "{{ item.group }}"
     state: directory
   with_items: glusterfs_create_bricks
-  when: inventory_hostname in groups[glusterfs_server_group]
 
-- name: config_glusterfs | create gluster volume
+- name: config_glusterfs_server | create gluster volume
   gluster_volume:
     state: present
     name: "{{ item.name }}"
@@ -41,6 +41,9 @@
     replicas: "{{ groups[glusterfs_server_group]|length }}"
     cluster: "{% for host in groups[glusterfs_server_group] %}{{ host }}{% if not loop.last %},{% endif %}{% endfor %}"
   with_items: glusterfs_create_bricks
-  when: >
-        inventory_hostname in groups[glusterfs_server_group] and
-        inventory_hostname == glusterfs_server_master
+  when: inventory_hostname == glusterfs_server_master
+
+- name: debian | enabling glusterfs-server
+  service:
+    name: "glusterfs-server"
+    enabled: yes
