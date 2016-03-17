@@ -3,7 +3,7 @@
   apt:
     name: "glusterfs-client"
     state: present
-    
+
 - name: config_glusterfs_client | mounting gluster volumes
   mount:
     name: "{{ item.mountpoint }}"
@@ -11,4 +11,4 @@
     fstype: "{{ item.fstype }}"
     opts: "{{ item.opts|default ('omit') }}"
     state: "{{ item.state }}"
-  with_items: glusterfs_client_mounts
+  with_items: '{{ glusterfs_client_mounts }}'
