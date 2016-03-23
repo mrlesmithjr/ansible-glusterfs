@@ -16,6 +16,7 @@ Role Variables
 # defaults file for ansible-glusterfs
 config_glusterfs: false  #defines if glusterfs should be configured
 config_hosts: false  #defines if /etc/hosts should be updated with nodes
+glusterfs_arbiter_group: glusterfs-arbiter-nodes  #defines the Ansible inventory group for arbiter nodes to add to cluster (if desired)
 glusterfs_brick_dir: /mnt/gluster  #defines the mountpoint for gluster bricks and volumes to be created
 glusterfs_client_group: glusterfs-client-nodes  #defines the Ansible inventory group for clients
 glusterfs_client_mounts:
@@ -48,7 +49,9 @@ glusterfs_lvm_vols:  #defines GlusterFS LVM volumes to create (Used for GlusterF
     filesystem: xfs
     lvsize: 100%FREE
     mountpoint: '{{ glusterfs_brick_dir }}'
+    opts: 'defaults'
     vgname: glusterfs-vg
+glusterfs_manage_arbiter_nodes: false  #define if arbiter nodes should be managed or added to cluster
 glusterfs_nodes_group: glusterfs-nodes  #defines the Ansible inventory group name for all nodes part of GlusterFS
 glusterfs_primary_server: '{{ glusterfs_server_master }}'  #defines primary server for GlusterFS clients to connect to
 glusterfs_secondary_server: node1  #defines secondary server for GlusterFS clients to connect to
@@ -60,7 +63,7 @@ glusterfs_ubuntu_repo_info:  #defines Ubuntu repo for GlusterFS
   keyserver: 'keyserver.ubuntu.com'
   id: 'F7C73FCC930AC9F83B387A5613E01B7B3FE869A9'
   repo: 'deb http://ppa.launchpad.net/gluster/glusterfs-{{ glusterfs_version }}/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main'
-glusterfs_version: 3.6
+glusterfs_version: 3.7
 ````
 
 Dependencies
