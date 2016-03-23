@@ -35,7 +35,7 @@ glusterfs_lvm_vols:  #defines GlusterFS LVM volumes to create (Used for GlusterF
     filesystem: xfs
     lvsize: 100%FREE
     mountpoint: '{{ glusterfs_brick_dir }}'
-    opts: 'defaults'
+    opts: 'rw,inode64,noatime,nouuid'
     vgname: glusterfs-vg
 glusterfs_manage_arbiter_nodes: false  #define if arbiter nodes should be managed or added to cluster
 glusterfs_nodes_group: glusterfs-nodes  #defines the Ansible inventory group name for all nodes part of GlusterFS
