@@ -34,6 +34,7 @@ glusterfs_lvm_vols:  #defines GlusterFS LVM volumes to create (Used for GlusterF
     filesystem: xfs
     lvsize: 100%FREE
     mountpoint: '{{ glusterfs_brick_dir }}'
+    opts: 'defaults'
     vgname: glusterfs-vg
 glusterfs_nodes_group: glusterfs-nodes  #defines the Ansible inventory group name for all nodes part of GlusterFS
 glusterfs_primary_server: '{{ glusterfs_server_master }}'  #defines primary server for GlusterFS clients to connect to
