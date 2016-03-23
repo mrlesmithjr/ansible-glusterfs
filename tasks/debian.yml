@@ -30,3 +30,26 @@
     repo: '{{ glusterfs_debian_repo_info.repo }}'
     state: present
   when: ansible_distribution == "Debian"
+
+- name: debian | installing glusterfs server
+  apt:
+    name: "glusterfs-server"
+    state: present
+  when: >
+        inventory_hostname in groups[glusterfs_server_group] or
+        inventory_hostname in groups[glusterfs_arbiter_group]
+
+- name: debian | installing glusterfs client
+  apt:
+    name: "glusterfs-client"
+    state: present
+  when: inventory_hostname in groups[glusterfs_client_group]
+
+- name: debian | starting GlusterFS
+  service:
+    name: "glusterfs-server"
+    state: started
+    enabled: yes
+  when: >
+        inventory_hostname in groups[glusterfs_server_group] or
+        inventory_hostname in groups[glusterfs_arbiter_group]

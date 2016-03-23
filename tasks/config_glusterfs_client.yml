@@ -1,9 +1,4 @@
 ---
-- name: debian | installing glusterfs client
-  apt:
-    name: "glusterfs-client"
-    state: present
-
 - name: config_glusterfs_client | mounting gluster volumes
   mount:
     name: "{{ item.mountpoint }}"

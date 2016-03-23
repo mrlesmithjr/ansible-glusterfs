@@ -1,9 +1,4 @@
 ---
-- name: debian | installing glusterfs server
-  apt:
-    name: "glusterfs-server"
-    state: present
-
 - name: config_glusterfs_server | reconfiguring /etc/init/mounting-glusterfs.conf to start earlier on boot
   template:
     src: "etc/init/mounting-glusterfs.conf.j2"
@@ -11,12 +6,6 @@
     owner: root
     group: root
     mode: 0644
-
-- name: config_glusterfs_server | starting GlusterFS
-  service:
-    name: "glusterfs-server"
-    state: started
-    enabled: true
 
 - name: config_glusterfs_server | connecting gluster peers
   shell: gluster peer probe {{ item }}
@@ -26,7 +15,8 @@
   delegate_to: "{{ glusterfs_server_master }}"
   with_items: '{{ groups[glusterfs_server_group] }}'
   when: >
-        item != glusterfs_server_master
+        item != glusterfs_server_master and
+        inventory_hostname not in groups[glusterfs_arbiter_group]
 
 - name: config_glusterfs_server | creating brick folders
   file:
@@ -35,6 +25,8 @@
     group: "{{ item.group }}"
     state: directory
   with_items: '{{ glusterfs_create_bricks }}'
+  when: >
+        inventory_hostname not in groups[glusterfs_arbiter_group]
 
 - name: config_glusterfs_server | create gluster volume
   gluster_volume:
@@ -45,8 +37,3 @@
     cluster: "{% for host in groups[glusterfs_server_group] %}{{ host }}{% if not loop.last %},{% endif %}{% endfor %}"
   with_items: '{{ glusterfs_create_bricks }}'
   when: inventory_hostname == glusterfs_server_master
-
-- name: debian | enabling glusterfs-server
-  service:
-    name: "glusterfs-server"
-    enabled: yes
