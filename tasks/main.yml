@@ -4,7 +4,8 @@
   when: >
         (glusterfs_config_lvm is defined and
         glusterfs_config_lvm) and
-        inventory_hostname in groups[glusterfs_server_group]
+        (inventory_hostname in groups[glusterfs_server_group] or
+        inventory_hostname in groups[glusterfs_arbiter_group])
 
 - include: update_etc_hosts.yml
   tags:
@@ -28,3 +29,6 @@
   when: >
         inventory_hostname in groups[glusterfs_client_group] and
         config_glusterfs
+
+- include: manage_arbiter_nodes.yml
+  when: glusterfs_manage_arbiter_nodes
