@@ -67,5 +67,7 @@
     src: "/dev/{{ item.vgname }}/{{ item.lvname }}"
     fstype: "{{ item.filesystem }}"
     opts: "{{ item.opts }}"
+    dump: "1"
+    passno: "2"
     state: mounted
   with_items: '{{ glusterfs_lvm_vols }}'
