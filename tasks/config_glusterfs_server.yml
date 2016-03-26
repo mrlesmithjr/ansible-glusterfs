@@ -20,7 +20,7 @@
 
 - name: config_glusterfs_server | creating brick folders
   file:
-    path: "{{ glusterfs_brick_dir }}/{{ item.name }}/"
+    path: "{{ glusterfs_brick_dir }}/.{{ item.name }}/"
     owner: "{{ item.owner }}"
     group: "{{ item.group }}"
     state: directory
@@ -32,7 +32,7 @@
   gluster_volume:
     state: present
     name: "{{ item.name }}"
-    brick: "{{ glusterfs_brick_dir }}/{{ item.name }}"
+    brick: "{{ glusterfs_brick_dir }}/.{{ item.name }}"
     replicas: "{{ groups[glusterfs_server_group]|length }}"
     cluster: "{% for host in groups[glusterfs_server_group] %}{{ host }}{% if not loop.last %},{% endif %}{% endfor %}"
   with_items: '{{ glusterfs_create_bricks }}'
