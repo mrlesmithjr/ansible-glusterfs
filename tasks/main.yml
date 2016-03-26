@@ -32,3 +32,10 @@
 
 - include: manage_arbiter_nodes.yml
   when: glusterfs_manage_arbiter_nodes
+
+- include: resize_lvm.yml
+  tags:
+    - glusterfs-resize-lvm
+  when: >
+        glusterfs_resize_lvm is defined and
+        glusterfs_resize_lvm
