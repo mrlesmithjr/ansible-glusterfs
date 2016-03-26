@@ -44,6 +44,7 @@ glusterfs_primary_server: '{{ glusterfs_server_master }}'  #defines primary serv
 glusterfs_secondary_server: node1  #defines secondary server for GlusterFS clients to connect to
 glusterfs_repl_int_address: ansible_eth1.ipv4.address  #defines interface to configure for glusterfs replication...define here or in group_vars/group
 glusterfs_resize_lvm: false  #defines if lvm should be resized
+glusterfs_resize_lvm_size: +100%FREE
 glusterfs_server: false  #defines if host is a glusterfs server
 glusterfs_server_group: glusterfs-server-nodes  #defines the hosts inventory group to configure...define here or in group_vars/group
 glusterfs_server_master: node0  #defines the node to be considered as GlusterFS master
