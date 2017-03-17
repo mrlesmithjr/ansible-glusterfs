@@ -42,4 +42,4 @@
   with_items: '{{ glusterfs_create_bricks }}'
   when: >
         inventory_hostname == glusterfs_server_master and
-        item.name not in gluster_voumes.stdout
+        item.name not in gluster_volumes.stdout
