@@ -31,7 +31,9 @@
 - name: config_glusterfs_server | Capture Gluster Volumes
   command: "gluster volume list"
   register: "gluster_volumes"
+  # We do this to ensure this executes in --check mode
   always_run: yes
+  changed_when: false
 
 - name: config_glusterfs_server | create gluster volume
   gluster_volume:
