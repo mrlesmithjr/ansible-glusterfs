@@ -7,13 +7,6 @@
         (inventory_hostname in groups[glusterfs_server_group] or
         inventory_hostname in groups[glusterfs_arbiter_group])
 
-- include: update_etc_hosts.yml
-  tags:
-    - update_etc_hosts
-  when: >
-        config_hosts is defined and
-        config_hosts
-
 - include: debian.yml
   when: ansible_os_family == "Debian"
 

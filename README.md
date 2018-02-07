@@ -20,7 +20,6 @@ None
       become: true
       vars:
         - config_glusterfs: true
-        - config_hosts: true
         - glusterfs_config_lvm: true
         - pri_domain_name: 'test.vagrant.local'
       roles:
