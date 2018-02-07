@@ -4,7 +4,8 @@ An [Ansible](https://www.ansible.com) role to install/configure [GlusterFS](http
 
 ## Requirements
 
-Add hard drive devices to server nodes to configure for LVM bricks and set glusterfs_config_lvm: true
+Add hard drive devices to server nodes to configure for LVM bricks and
+set `glusterfs_config_lvm: true`
 
 ## Role Variables
 
@@ -16,24 +17,16 @@ None
 
 ## Example Playbook
 
-    - hosts: all
-      become: true
-      vars:
-        - config_glusterfs: true
-        - glusterfs_config_lvm: true
-        - pri_domain_name: 'test.vagrant.local'
-      roles:
-        - role: ansible-glusterfs
-      tasks:
+[playbook.yml](./playbook.yml)
 
 ## License
 
-BSD
+MIT
 
 ## Author Information
 
 Larry Smith Jr.
 
--   @mrlesmithjr
--   <http://everythingshouldbevirtual.com>
--   mrlesmithjr [at] gmail.com
+-   [EverythingShouldBeVirtual](http://everythingshouldbevirtual.com)
+-   [@mrlesmithjr](https://www.twitter.com/mrlesmithjr)
+-   <mailto:mrlesmithjr@gmail.com>
