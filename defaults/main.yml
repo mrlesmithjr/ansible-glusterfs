@@ -39,8 +39,8 @@ glusterfs_create_bricks: []
 
 # defines Debian repo for GlusterFS
 glusterfs_debian_repo_info:
-  key_url: 'http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.8/pub.key'
-  repo: 'deb http://download.gluster.org/pub/gluster/glusterfs/3.7/3.7.8/Debian/{{ ansible_distribution_release|lower }}/apt {{ ansible_distribution_release|lower }} main'
+  key_url: "https://download.gluster.org/pub/gluster/glusterfs/{{ glusterfs_version }}/rsa.pub"
+  repo: "deb http://download.gluster.org/pub/gluster/glusterfs/{{ glusterfs_version }}/LATEST/Debian/{{ ansible_distribution_release|lower }}/apt {{ ansible_distribution_release|lower }} main"
 
 # defines if nodes are using iSCSI for back-end LVM...
 glusterfs_iscsi_lvm: false
