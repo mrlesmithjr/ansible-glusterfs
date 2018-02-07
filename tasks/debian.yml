@@ -12,6 +12,13 @@
     state: present
   when: ansible_distribution == "Debian"
 
+- name: debian | adding glusterfs apt repo key
+  apt_key:
+    keyserver: "{{ glusterfs_ubuntu_repo_info.keyserver }}"
+    id: "{{ glusterfs_ubuntu_repo_info.id }}"
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
 - name: debian | adding glusterfs apt repo
   apt_repository:
     repo: '{{ glusterfs_ubuntu_repo_info.repo }}'
@@ -30,7 +37,8 @@
     state: present
   when: >
         inventory_hostname in groups[glusterfs_server_group] or
-        inventory_hostname in groups[glusterfs_arbiter_group]
+        (groups[glusterfs_arbiter_group] is defined and
+        inventory_hostname in groups[glusterfs_arbiter_group])
 
 - name: debian | installing glusterfs client
   apt:
@@ -47,4 +55,5 @@
     enabled: yes
   when: >
         inventory_hostname in groups[glusterfs_server_group] or
-        inventory_hostname in groups[glusterfs_arbiter_group]
+        (groups[glusterfs_arbiter_group] is defined and
+        inventory_hostname in groups[glusterfs_arbiter_group])
