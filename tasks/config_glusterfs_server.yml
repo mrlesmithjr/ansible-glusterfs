@@ -16,7 +16,9 @@
   with_items: '{{ groups[glusterfs_server_group] }}'
   when: >
         item != glusterfs_server_master and
-        inventory_hostname not in groups[glusterfs_arbiter_group]
+        ((groups[glusterfs_arbiter_group] is defined and
+        inventory_hostname not in groups[glusterfs_arbiter_group]) or
+        groups[glusterfs_arbiter_group] is not defined)
 
 - name: config_glusterfs_server | creating brick folders
   file:
@@ -26,7 +28,9 @@
     state: directory
   with_items: '{{ glusterfs_create_bricks }}'
   when: >
-        inventory_hostname not in groups[glusterfs_arbiter_group]
+        ((groups[glusterfs_arbiter_group] is defined and
+        inventory_hostname not in groups[glusterfs_arbiter_group]) or
+        groups[glusterfs_arbiter_group] is not defined)
 
 - name: config_glusterfs_server | Capture Gluster Volumes
   command: "gluster volume list"
@@ -40,6 +44,7 @@
     state: present
     name: "{{ item.name }}"
     brick: "{{ glusterfs_brick_dir }}/.{{ item.name }}"
+    force: "{{ glusterfs_volume_force_create }}"
     replicas: "{{ groups[glusterfs_server_group]|length }}"
     cluster: "{% for host in groups[glusterfs_server_group] %}{{ host }}{% if not loop.last %},{% endif %}{% endfor %}"
   with_items: '{{ glusterfs_create_bricks }}'
