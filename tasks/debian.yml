@@ -22,13 +22,13 @@
 
 - name: debian | adding glusterfs apt repo
   apt_repository:
-    repo: '{{ glusterfs_ubuntu_repo_info.repo }}'
+    repo: "{{ glusterfs_ubuntu_repo_info.repo }}"
     state: present
   when: ansible_distribution == "Ubuntu"
 
 - name: debian | adding glusterfs apt repo
   apt_repository:
-    repo: '{{ glusterfs_debian_repo_info.repo }}'
+    repo: "{{ glusterfs_debian_repo_info.repo }}"
     state: present
   when: ansible_distribution == "Debian"
 
@@ -37,24 +37,47 @@
     name: "glusterfs-server"
     state: present
   when: >
-        inventory_hostname in groups[glusterfs_server_group] or
-        (groups[glusterfs_arbiter_group] is defined and
-        inventory_hostname in groups[glusterfs_arbiter_group])
+    inventory_hostname in groups[glusterfs_server_group] or
+    (groups[glusterfs_arbiter_group] is defined and
+    inventory_hostname in groups[glusterfs_arbiter_group])
 
 - name: debian | installing glusterfs client
   apt:
     name: "glusterfs-client"
     state: present
   when: >
-        groups[glusterfs_client_group] is defined and
-        inventory_hostname in groups[glusterfs_client_group]
+    groups[glusterfs_client_group] is defined and
+    inventory_hostname in groups[glusterfs_client_group]
 
 - name: debian | starting GlusterFS
   service:
     name: "glusterfs-server"
     state: started
     enabled: yes
-  when: >
-        inventory_hostname in groups[glusterfs_server_group] or
-        (groups[glusterfs_arbiter_group] is defined and
-        inventory_hostname in groups[glusterfs_arbiter_group])
+  when:
+    - inventory_hostname in groups[glusterfs_server_group] or
+      (groups[glusterfs_arbiter_group] is defined
+    - inventory_hostname in groups[glusterfs_arbiter_group])
+    - ansible_distribution_release != 'buster'
+
+- name: debian | starting glusterd
+  service:
+    name: glusterd
+    state: started
+    enabled: true
+  when:
+    - inventory_hostname in groups[glusterfs_server_group] or
+      (groups[glusterfs_arbiter_group] is defined
+    - inventory_hostname in groups[glusterfs_arbiter_group])
+    - ansible_distribution_release == 'buster'
+
+- name: debian | starting glustereventsd
+  service:
+    name: glustereventsd
+    state: started
+    enabled: true
+  when:
+    - inventory_hostname in groups[glusterfs_server_group] or
+      (groups[glusterfs_arbiter_group] is defined
+    - inventory_hostname in groups[glusterfs_arbiter_group])
+    - ansible_distribution_release == 'buster'
