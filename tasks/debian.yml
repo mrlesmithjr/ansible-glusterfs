@@ -56,8 +56,8 @@
     enabled: yes
   when:
     - inventory_hostname in groups[glusterfs_server_group] or
-      (groups[glusterfs_arbiter_group] is defined
-    - inventory_hostname in groups[glusterfs_arbiter_group])
+      (groups[glusterfs_arbiter_group] is defined and
+      inventory_hostname in groups[glusterfs_arbiter_group])
     - ansible_distribution_release != 'buster'
 
 - name: debian | starting glusterd
@@ -67,8 +67,8 @@
     enabled: true
   when:
     - inventory_hostname in groups[glusterfs_server_group] or
-      (groups[glusterfs_arbiter_group] is defined
-    - inventory_hostname in groups[glusterfs_arbiter_group])
+      (groups[glusterfs_arbiter_group] is defined and
+      inventory_hostname in groups[glusterfs_arbiter_group])
     - ansible_distribution_release == 'buster'
 
 - name: debian | starting glustereventsd
@@ -78,6 +78,6 @@
     enabled: true
   when:
     - inventory_hostname in groups[glusterfs_server_group] or
-      (groups[glusterfs_arbiter_group] is defined
-    - inventory_hostname in groups[glusterfs_arbiter_group])
+      (groups[glusterfs_arbiter_group] is defined and
+      inventory_hostname in groups[glusterfs_arbiter_group])
     - ansible_distribution_release == 'buster'
