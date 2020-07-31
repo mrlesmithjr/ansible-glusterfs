@@ -1,0 +1,12 @@
+---
+- name: set_facts | Setting GlusterFS facts
+  set_fact:
+    glusterfs_repl_int_address: "{{ hostvars[inventory_hostname]['ansible_'+glusterfs_repl_int]['ipv4']['address'] }}"
+
+- name: set_facts | Debug GlusterFS replication interface address
+  debug:
+    var: glusterfs_repl_int_address
+
+- name: set_facts | Debug GlusterFS cluster nodes
+  debug:
+    var: glusterfs_cluster_nodes
