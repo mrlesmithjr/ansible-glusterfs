@@ -1,6 +1,8 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    glusterfs_repl_int: "{{ ansible_default_ipv4.interface }}"
   tasks:
     - name: Include ansible-glusterfs
       include_role:
