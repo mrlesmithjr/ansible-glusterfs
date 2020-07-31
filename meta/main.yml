@@ -1,23 +1,26 @@
 ---
 galaxy_info:
   author: Larry Smith Jr.
-  description: Installs GlusterFS http://www.gluster.org/ (configures and creates cluster)
-
+  description: Ansible role to install/configure GlusterFS
   license: MIT
-
-  min_ansible_version: 1.2
+  min_ansible_version: 2.8
 
   platforms:
-  - name: Debian
-    versions:
-      - stretch
-  - name: Ubuntu
-    versions:
-      - trusty
-      - xenial
+    - name: Debian
+      versions:
+        - all
+    - name: EL
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
 
-  categories:
-  - clustering
-  - system
+  galaxy_tags:
+    - clustering
+    - system
 
 dependencies: []

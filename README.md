@@ -1,11 +1,23 @@
 # ansible-glusterfs
 
-An [Ansible](https://www.ansible.com) role to install/configure [GlusterFS](http://www.gluster.org/)
+Ansible role to install/configure GlusterFS Server
+
+> NOTE: For GlusterFS client use https://github.com/mrlesmithjr/ansible-glusterfs-client
+
+## Build Status
+
+### GitHub Actions
+
+![Molecule Test](https://github.com/mrlesmithjr/ansible-glusterfs/workflows/Molecule%20Test/badge.svg)
+
+### Travis CI
+
+[![Build Status](https://travis-ci.org/mrlesmithjr/ansible-glusterfs.svg?branch=master)](https://travis-ci.org/mrlesmithjr/ansible-glusterfs)
 
 ## Requirements
 
-Add hard drive devices to server nodes to configure for LVM bricks and
-set `glusterfs_config_lvm: true`
+For any required Ansible roles, review:
+[requirements.yml](requirements.yml)
 
 ## Role Variables
 
@@ -13,11 +25,9 @@ set `glusterfs_config_lvm: true`
 
 ## Dependencies
 
-None
-
 ## Example Playbook
 
-[playbook.yml](./playbook.yml)
+[playbook.yml](playbook.yml)
 
 ## License
 
@@ -27,6 +37,8 @@ MIT
 
 Larry Smith Jr.
 
--   [EverythingShouldBeVirtual](http://everythingshouldbevirtual.com)
--   [@mrlesmithjr](https://www.twitter.com/mrlesmithjr)
--   <mailto:mrlesmithjr@gmail.com>
+- [@mrlesmithjr](https://twitter.com/mrlesmithjr)
+- [mrlesmithjr@gmail.com](mailto:mrlesmithjr@gmail.com)
+- [http://everythingshouldbevirtual.com](http://everythingshouldbevirtual.com)
+
+> NOTE: Repo has been created/updated using [https://github.com/mrlesmithjr/cookiecutter-ansible-role](https://github.com/mrlesmithjr/cookiecutter-ansible-role) as a template.

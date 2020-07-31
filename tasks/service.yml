@@ -1,0 +1,7 @@
+---
+- name: service | Ensuring glusterd Service is Enabled and Started
+  service:
+    name: glusterd
+    state: started
+    enabled: true
+  become: true

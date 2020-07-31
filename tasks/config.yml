@@ -1,0 +1,20 @@
+---
+- name: config | Creating GlusterFS Brick Folders
+  file:
+    path: "{{ item.1 }}"
+    state: directory
+  become: true
+  loop: "{{ lookup('subelements', glusterfs_bricks, 'bricks', wantlist=True) }}"
+
+- name: config | Managing GlusterFS Volumes
+  gluster_volume:
+    bricks: "{{ item.1 }}"
+    cluster: "{{ glusterfs_cluster_nodes }}"
+    force: true
+    name: "{{ item.0.name }}"
+    replicas: "{{ glusterfs_cluster_nodes|length }}"
+    state: present
+  become: true
+  loop: "{{ lookup('subelements', glusterfs_bricks, 'bricks', wantlist=True) }}"
+  when:
+    - inventory_hostname == glusterfs_primary
