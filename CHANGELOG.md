@@ -1,3 +1,15 @@
+commit c43951073cb9858eafaad1530bdd64d9aa98dac4
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Fri Jul 31 00:33:40 2020 -0400
+
+    removed glustereventsd service
+
+commit 24b460cf634953ad324ad79629a53d3576f65062
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Fri Jul 31 00:20:12 2020 -0400
+
+    Fixing Debian pre-reqs
+
 commit ff39a565c74657478080100d8665dd97560b2007
 Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Fri Jul 31 00:10:23 2020 -0400

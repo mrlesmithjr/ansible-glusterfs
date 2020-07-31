@@ -35,7 +35,7 @@
 
 - name: debian | Adding GlusterFS Repo
   apt_repository:
-    repo: "deb http://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/{{ ansible_distribution_release|lower }}/apt {{ ansible_distribution_release|lower }} main" # noqa 204
+    repo: "deb https://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/{{ ansible_distribution_version }}/amd64/apt {{ ansible_distribution_release|lower }} main" # noqa 204
     state: present
   become: true
   when: ansible_distribution == "Debian"
