@@ -1,4 +1,15 @@
 ---
+- name: redhat | Enabling PowerTools Repo
+  ini_file:
+    path: /etc/yum.repos.d/CentOS-PowerTools.repo
+    section: PowerTools
+    option: enabled
+    value: "1"
+  become: true
+  when:
+    - ansible_distribution != "Fedora"
+    - ansible_distribution_version is version('8', '>=')
+
 - name: redhat | Adding Gluster Repo
   yum:
     name: centos-release-gluster
