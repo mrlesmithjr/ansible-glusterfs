@@ -7,17 +7,11 @@
 - name: debian | Installing Pre-Reqs
   apt:
     name:
+      - apt-transport-https
       - gnupg
-    state: present
-  become: true
-
-- name: debian | Installing Pre-Reqs
-  apt:
-    name:
       - software-properties-common
     state: present
   become: true
-  when: ansible_distribution == "Ubuntu"
 
 - name: debian | Adding GlusterFS Repo
   apt_repository:
@@ -28,14 +22,14 @@
 
 - name: debian | Adding GlusterFS Repo Key
   apt_key:
-    url: https://download.gluster.org/pub/gluster/glusterfs/7/rsa.pub
+    url: "{{ glusterfs_debian_repo_key }}"
     state: present
   become: true
   when: ansible_distribution == "Debian"
 
 - name: debian | Adding GlusterFS Repo
   apt_repository:
-    repo: "deb https://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/{{ ansible_distribution_version }}/amd64/apt {{ ansible_distribution_release|lower }} main" # noqa 204
+    repo: "{{ glusterfs_debian_repo }}"
     state: present
   become: true
   when: ansible_distribution == "Debian"

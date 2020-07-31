@@ -21,6 +21,10 @@ glusterfs_cluster_nodes: |
   {% endfor %}
   {{ cluster }}
 
+glusterfs_debian_repo_key: "{{ glusterfs_debian_repo_url+'/rsa.pub' }}"
+glusterfs_debian_repo_url: "{{ 'https://download.gluster.org/pub/gluster/glusterfs/'+glusterfs_version|string }}"
+glusterfs_debian_repo: "{{ 'deb '+glusterfs_debian_repo_url+'/LATEST/Debian/'+ansible_distribution_release|lower+'/amd64/apt '+ansible_distribution_release|lower+' main' }}"
+
 # Defines the node to be considered as GlusterFS primary
 glusterfs_primary: "{{ groups[glusterfs_server_group][0] }}"
 
@@ -29,3 +33,5 @@ glusterfs_repl_int: enp0s8
 
 # Defines Ansible group which contains GlusterFS servers
 glusterfs_server_group: glusterfs_servers
+
+glusterfs_version: 7
