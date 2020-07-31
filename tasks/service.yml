@@ -5,10 +5,3 @@
     state: started
     enabled: true
   become: true
-
-- name: service | Ensuring glustereventsd Service is Enabled and Started
-  service:
-    name: glustereventsd
-    state: started
-    enabled: true
-  become: true
