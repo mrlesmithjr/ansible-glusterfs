@@ -28,4 +28,4 @@ glusterfs_primary: "{{ groups[glusterfs_server_group][0] }}"
 glusterfs_repl_int: enp0s8
 
 # Defines Ansible group which contains GlusterFS servers
-glusterfs_server_group: glusterfs_server_nodes
+glusterfs_server_group: glusterfs_servers
