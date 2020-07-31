@@ -8,6 +8,12 @@
   apt:
     name:
       - gnupg
+    state: present
+  become: true
+
+- name: debian | Installing Pre-Reqs
+  apt:
+    name:
       - software-properties-common
     state: present
   become: true

@@ -1,3 +1,39 @@
+commit ff39a565c74657478080100d8665dd97560b2007
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Fri Jul 31 00:10:23 2020 -0400
+
+    Added pre-req gnupg
+
+commit 435e8ad45431858bcf7d7305028a96125f07071c
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Thu Jul 30 23:45:46 2020 -0400
+
+    Changed replication interface for Molecule testing
+
+commit fbe5a1807a39e8129858dd9e2be1e565876ef00e
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Thu Jul 30 23:39:52 2020 -0400
+
+    Changed default Ansible group
+
+commit 2fd09b9bb1647d4afcfa0f2ecd2b345434a6765e
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Thu Jul 30 23:39:40 2020 -0400
+
+    Fixed linting
+
+commit 03005f66cbece0fa7d171af748d150d7bc90c6b9
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Thu Jul 30 23:30:35 2020 -0400
+
+    Fixed linting
+
+commit 3dd41048c871272a0d503e1b0473bd634107f644
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Thu Jul 30 23:25:58 2020 -0400
+
+    Added new files based on Cookiecutter template
+
 commit d2d5fffa089ea59bf7035b2b4e95e00b5978171d
 Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Thu Jul 30 23:24:49 2020 -0400
