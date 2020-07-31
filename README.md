@@ -1,6 +1,8 @@
 # ansible-glusterfs
 
-Ansible role to install/configure GlusterFS
+Ansible role to install/configure GlusterFS Server
+
+> NOTE: For GlusterFS client use https://github.com/mrlesmithjr/ansible-glusterfs-client
 
 ## Build Status
 

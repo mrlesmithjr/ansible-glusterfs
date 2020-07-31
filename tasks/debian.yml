@@ -1,83 +1,40 @@
 ---
-- name: debian | installing pre-reqs
+- name: debian | Updating APT Cache
   apt:
-    name: "{{ item }}"
+    update_cache: true
+  become: true
+
+- name: debian | Installing Pre-Reqs
+  apt:
+    name:
+      - software-properties-common
     state: present
-  with_items:
-    - python-software-properties
+  become: true
   when: ansible_distribution == "Ubuntu"
 
-- name: debian | adding glusterfs apt repo key
-  apt_key:
-    url: "{{ glusterfs_debian_repo_info.key_url }}"
+- name: debian | Adding GlusterFS Repo
+  apt_repository:
+    repo: ppa:gluster/glusterfs-7
     state: present
+  become: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: debian | Adding GlusterFS Repo Key
+  apt_key:
+    url: https://download.gluster.org/pub/gluster/glusterfs/7/rsa.pub
+    state: present
+  become: true
   when: ansible_distribution == "Debian"
 
-- name: debian | adding glusterfs apt repo key
-  apt_key:
-    keyserver: "{{ glusterfs_ubuntu_repo_info.keyserver }}"
-    id: "{{ glusterfs_ubuntu_repo_info.id }}"
-    state: present
-  when: ansible_distribution == "Ubuntu"
-
-- name: debian | adding glusterfs apt repo
+- name: debian | Adding GlusterFS Repo
   apt_repository:
-    repo: "{{ glusterfs_ubuntu_repo_info.repo }}"
+    repo: "deb http://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/{{ ansible_distribution_release|lower }}/apt {{ ansible_distribution_release|lower }} main"
     state: present
-  when: ansible_distribution == "Ubuntu"
-
-- name: debian | adding glusterfs apt repo
-  apt_repository:
-    repo: "{{ glusterfs_debian_repo_info.repo }}"
-    state: present
+  become: true
   when: ansible_distribution == "Debian"
 
-- name: debian | installing glusterfs server
+- name: debian | Installing glusterfs-server
   apt:
-    name: "glusterfs-server"
+    name: glusterfs-server
     state: present
-  when: >
-    inventory_hostname in groups[glusterfs_server_group] or
-    (groups[glusterfs_arbiter_group] is defined and
-    inventory_hostname in groups[glusterfs_arbiter_group])
-
-- name: debian | installing glusterfs client
-  apt:
-    name: "glusterfs-client"
-    state: present
-  when: >
-    groups[glusterfs_client_group] is defined and
-    inventory_hostname in groups[glusterfs_client_group]
-
-- name: debian | starting GlusterFS
-  service:
-    name: "glusterfs-server"
-    state: started
-    enabled: yes
-  when:
-    - inventory_hostname in groups[glusterfs_server_group] or
-      (groups[glusterfs_arbiter_group] is defined and
-      inventory_hostname in groups[glusterfs_arbiter_group])
-    - ansible_distribution_release != 'buster'
-
-- name: debian | starting glusterd
-  service:
-    name: glusterd
-    state: started
-    enabled: true
-  when:
-    - inventory_hostname in groups[glusterfs_server_group] or
-      (groups[glusterfs_arbiter_group] is defined and
-      inventory_hostname in groups[glusterfs_arbiter_group])
-    - ansible_distribution_release == 'buster'
-
-- name: debian | starting glustereventsd
-  service:
-    name: glustereventsd
-    state: started
-    enabled: true
-  when:
-    - inventory_hostname in groups[glusterfs_server_group] or
-      (groups[glusterfs_arbiter_group] is defined and
-      inventory_hostname in groups[glusterfs_arbiter_group])
-    - ansible_distribution_release == 'buster'
+  become: true

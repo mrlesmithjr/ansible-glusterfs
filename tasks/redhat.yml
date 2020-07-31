@@ -1,1 +1,13 @@
 ---
+- name: redhat | Adding Gluster Repo
+  yum:
+    name: centos-release-gluster
+    state: present
+  become: true
+  when: ansible_distribution != "Fedora"
+
+- name: redhat | Installing glusterfs-server
+  package:
+    name: glusterfs-server
+    state: present
+  become: true
