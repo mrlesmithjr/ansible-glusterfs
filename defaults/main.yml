@@ -36,4 +36,6 @@ glusterfs_repl_int: enp0s8
 # Defines Ansible group which contains GlusterFS servers
 glusterfs_server_group: glusterfs_servers
 
+glusterfs_ubuntu_repo: "{{ 'ppa:gluster/glusterfs-'+glusterfs_version|string }}"
+
 glusterfs_version: 7
