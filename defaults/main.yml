@@ -17,7 +17,9 @@ glusterfs_bricks_dir: /export
 glusterfs_cluster_nodes: |
   {% set cluster = [] %}
   {% for host in groups[glusterfs_server_group] %}
-  {%   set _ = cluster.append(hostvars[host]['glusterfs_repl_int_address']) %}
+  {%   if hostvars[host]['glusterfs_repl_int_address'] is defined %}
+  {%     set _ = cluster.append(hostvars[host]['glusterfs_repl_int_address']) %}
+  {%   endif %}
   {% endfor %}
   {{ cluster }}
 

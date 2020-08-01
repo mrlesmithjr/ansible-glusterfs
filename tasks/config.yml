@@ -6,6 +6,14 @@
   become: true
   loop: "{{ lookup('subelements', glusterfs_bricks, 'bricks', wantlist=True) }}"
 
+- name: config | Managing GlusterFS Trusted Storage Pool
+  gluster_peer:
+    nodes: "{{ glusterfs_cluster_nodes }}"
+    state: present
+  become: true
+  when:
+    - inventory_hostname == glusterfs_primary
+
 - name: config | Managing GlusterFS Volumes
   gluster_volume:
     bricks: "{{ item.1 }}"
