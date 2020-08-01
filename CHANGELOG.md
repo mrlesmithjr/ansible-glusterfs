@@ -1,3 +1,27 @@
+commit 2c77877da17a150e4195f4fbe1f7534f7ae56e62
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Fri Jul 31 14:05:34 2020 -0400
+
+    Disabled Debian8 testing
+
+commit f609973612e0040d3280fad0903b00c95094cf89
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Fri Jul 31 13:40:10 2020 -0400
+
+    Fixing CentOS8
+
+commit fe1a3ac1be2320713c718bf0f31dfb8cd4c429ed
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Fri Jul 31 13:09:55 2020 -0400
+
+    Fixing Debian repo issues
+
+commit 46de2aa0cb8fd92cbabfd59f83267ced6265b4a2
+Author: Larry Smith Jr <mrlesmithjr@gmail.com>
+Date:   Fri Jul 31 00:41:43 2020 -0400
+
+    Fixed Debian repo
+
 commit c43951073cb9858eafaad1530bdd64d9aa98dac4
 Author: Larry Smith Jr <mrlesmithjr@gmail.com>
 Date:   Fri Jul 31 00:33:40 2020 -0400
