@@ -50,7 +50,7 @@ colorama==0.4.3
     #   python-gilt
 cookiecutter==1.7.2
     # via molecule
-cryptography==3.0
+cryptography==41.0.2
     # via
     #   ansible
     #   paramiko
@@ -148,7 +148,6 @@ six==1.15.0
     #   bcrypt
     #   click-completion
     #   cookiecutter
-    #   cryptography
     #   docker
     #   fasteners
     #   livereload
