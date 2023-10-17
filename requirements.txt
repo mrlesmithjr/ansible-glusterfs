@@ -169,7 +169,7 @@ tqdm==4.48.0
     # via nltk
 tree-format==0.1.2
     # via molecule
-urllib3==1.25.10
+urllib3==1.26.18
     # via requests
 websocket-client==0.57.0
     # via docker
