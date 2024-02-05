@@ -50,7 +50,7 @@ colorama==0.4.3
     #   python-gilt
 cookiecutter==1.7.2
     # via molecule
-cryptography==3.0
+cryptography==42.0.0
     # via
     #   ansible
     #   paramiko
@@ -79,7 +79,9 @@ joblib==0.16.0
 livereload==2.6.2
     # via mkdocs
 lunr[languages]==0.5.8
-    # via mkdocs
+    # via
+    #   lunr
+    #   mkdocs
 markdown==3.2.2
     # via mkdocs
 markupsafe==1.1.1
@@ -148,7 +150,6 @@ six==1.15.0
     #   bcrypt
     #   click-completion
     #   cookiecutter
-    #   cryptography
     #   docker
     #   fasteners
     #   livereload
