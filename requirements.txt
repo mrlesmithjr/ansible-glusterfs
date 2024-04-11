@@ -62,7 +62,7 @@ fasteners==0.15
     # via python-gilt
 future==0.18.2
     # via lunr
-idna==2.10
+idna==3.7
     # via requests
 jinja2==2.11.2
     # via
