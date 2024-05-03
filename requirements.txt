@@ -165,7 +165,7 @@ tornado==6.3.2
     # via
     #   livereload
     #   mkdocs
-tqdm==4.48.0
+tqdm==4.66.3
     # via nltk
 tree-format==0.1.2
     # via molecule
