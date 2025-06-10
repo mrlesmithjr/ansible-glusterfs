@@ -128,7 +128,7 @@ pyyaml==5.3.1
     #   yamllint
 regex==2020.7.14
     # via nltk
-requests==2.31.0
+requests==2.32.4
     # via
     #   cookiecutter
     #   docker
