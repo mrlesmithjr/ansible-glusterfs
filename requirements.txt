@@ -21,7 +21,7 @@ cerberus==1.3.2
     # via molecule
 certifi==2020.6.20
     # via requests
-cffi==1.14.1
+cffi==2.0.0
     # via
     #   bcrypt
     #   cryptography
@@ -50,7 +50,7 @@ colorama==0.4.3
     #   python-gilt
 cookiecutter==1.7.2
     # via molecule
-cryptography==3.0
+cryptography==46.0.5
     # via
     #   ansible
     #   paramiko
@@ -148,7 +148,6 @@ six==1.15.0
     #   bcrypt
     #   click-completion
     #   cookiecutter
-    #   cryptography
     #   docker
     #   fasteners
     #   livereload
